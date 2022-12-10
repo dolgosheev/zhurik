@@ -1,0 +1,9 @@
+.vs/**
+**/.vs/**
+.idea/**
+**/.idea/**
+**/bin/**
+**/obj/**
+**.user
+**.pubxml
+appsettings.**.json

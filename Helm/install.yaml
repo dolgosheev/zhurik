@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name:  telegram-bots
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telegram-bot-zhurik
+  namespace: telegram-bots
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: telegram-bot-zhurik
+  template:
+    metadata:
+      labels:
+        app: telegram-bot-zhurik
+    spec:
+      containers:
+      - name: telegram-bot-zhurik
+        image: v0lshebnick/zhurik:0.0.2
+        resources:
+          limits:
+            cpu: 100m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 80
