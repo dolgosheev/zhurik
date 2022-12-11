@@ -110,6 +110,12 @@ public class TelegramBot
             await Reaction(Reactions.SayWeather, message);
             return;
         }
+        
+        if (message.Text.Contains("Кусь") || message.Text.Contains("кусь"))
+        {
+            await Reaction(Reactions.Bite, message);
+            return;
+        }
 
         // if (message.Text.StartsWith("/subscribe"))
         // {
@@ -145,6 +151,9 @@ public class TelegramBot
             case Reactions.UnSubscribe:
                 await ReactionUnSubscribe(message);
                 break;
+            case Reactions.Bite:
+                await ReactionBite(message);
+                break;
         }
     }
 
@@ -165,6 +174,20 @@ public class TelegramBot
         await _client.SendTextMessageAsync(
             chatId,
             $"Хорошо {username} (@{nickname}) ! Я передам моему создателю твою просьбу!",
+            cancellationToken: _token);
+    }
+    
+    private async Task ReactionBite(Message? message)
+    {
+        var (chatId, nickname, username) = GetInfo(message);
+
+        var client = new WebClient();
+        var image = client.DownloadData("http://i.giphy.com/7NUDCypKavZzkQGyp9.gif");
+        Stream stream = new MemoryStream(image);
+        
+        await _client.SendVideoAsync(
+            chatId,
+            stream,
             cancellationToken: _token);
     }
 
@@ -240,6 +263,7 @@ public class TelegramBot
         SayOk = 1,
         SayWeather = 2,
         Subscribe = 3,
-        UnSubscribe = 4
+        UnSubscribe = 4,
+        Bite = 5,
     }
 }
