@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: telegram-bot-zhurik
-        image: v0lshebnick/zhurik:v003
+        image: v0lshebnick/zhurik:v004
         resources:
           limits:
             cpu: 100m

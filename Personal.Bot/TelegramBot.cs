@@ -180,14 +180,22 @@ public class TelegramBot
     private async Task ReactionBite(Message? message)
     {
         var (chatId, nickname, username) = GetInfo(message);
-
-        var client = new WebClient();
-        var image = client.DownloadData("http://i.giphy.com/7NUDCypKavZzkQGyp9.gif");
-        Stream stream = new MemoryStream(image);
         
-        await _client.SendVideoAsync(
+        var bites = new List<string>
+        {
+            "7NUDCypKavZzkQGyp9",
+            "108wBdjDIkQZb2",
+            "NUKusScS22veAHbR2g",
+            "69159EHgBoG08",
+            "LON1BhW6JdFrG",
+            "cXQ3sLUqZ6QUjuqK95"
+        };
+
+        await _client.SendAnimationAsync(
             chatId,
-            stream,
+            
+            $"http://i.giphy.com/{bites[new Random().Next(0,bites.Count)]}.gif",
+            caption: $"Это я тебя {username} кусь",
             cancellationToken: _token);
     }
 
