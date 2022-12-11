@@ -1,5 +1,7 @@
 using Fas.Catalog.Extensions.SerilogEnricher;
 
+using Personal.Bot.Services;
+
 using Serilog;
 using Serilog.OpenTelemetry;
 
@@ -27,6 +29,10 @@ public static class Startup
             opt.AllowAlternateSchemes = true;
         });
 
+        builder.Services.AddMemoryCache();
+        builder.Services.AddHttpClient();
+        
+        builder.Services.AddTransient<GisMeteoService>();
         builder.Services.AddSingleton<TelegramBot>();
 
         return builder;
